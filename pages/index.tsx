@@ -5,40 +5,34 @@ import { useRef, useState, useEffect } from "react";
 import styles from "../styles/Home.module.css";
 
 const Home: NextPage = () => {
-  type ConversationItem = {
-    role: string;
-    content: string;
-  };
 
-  const [generatedBios, setGeneratedBios] = useState<String>("");
+
+  const [generatedText, setGeneratedText] = useState<String>("");
   const [message, setMessage] = useState<String>("");
   const [loading, setLoading] = useState(false);
   const [prompt, setPrompt] = useState("");
-  // const [conversation, setConversation] = useState<Conversation>([]);
+  const [isCopied, setIsCopied] = useState(false);
+
   const chatContentRef = useRef<null | HTMLDivElement>(null);
 
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const [isValid, setIsValid] = useState(false);
+  const resultRef = useRef<HTMLDivElement | null>(null);
 
-  // type Conversation = Array<ConversationItem>;
   useEffect(() => {
     // Scroll to the bottom of the chat content container
     if (chatContentRef.current) {
       chatContentRef.current.scrollTop = chatContentRef.current.scrollHeight;
     }
-  }, [generatedBios, message]);
+  }, [generatedText, message]);
 
   const sendHandler = async () => {
     if (prompt === "") return;
     setMessage(prompt);
     setPrompt("");
-    setGeneratedBios("");
-    // setConversation((prev: Conversation) => [
-    //   ...prev,
-    //   { role: "user", content: prompt },
-    // ]);
+    setGeneratedText("");
     setLoading(true);
-    
+
     const response = await fetch("/api/generate", {
       method: "POST",
       headers: {
@@ -65,7 +59,7 @@ const Home: NextPage = () => {
       const { value, done: doneReading } = await reader.read();
       done = doneReading;
       const chunkValue = decoder.decode(value);
-      setGeneratedBios((prev) => prev + chunkValue);
+      setGeneratedText((prev) => prev + chunkValue);
     }
 
     setLoading(false);
@@ -100,6 +94,19 @@ const Home: NextPage = () => {
       </div>
     );
   };
+  const copyHandler = () => {
+    if (resultRef.current === null) return;
+    const range = document.createRange();
+    range.selectNode(resultRef.current);
+    window.getSelection()?.removeAllRanges();
+    window.getSelection()?.addRange(range);
+    document.execCommand("copy");
+    setIsCopied(true);
+    setIsCopied(true);
+    setTimeout(() => {
+      setIsCopied(false);
+    }, 1500);
+  };
 
   return (
     <div className={styles.container}>
@@ -118,8 +125,8 @@ const Home: NextPage = () => {
               </div>
             ) : (
               <>
-                <div className="userBox">
-                  <div className="user">
+                <div className={styles.userBox}>
+                  <div className={styles.user}>
                     <Image
                       alt="user"
                       src={`/images/user.svg`}
@@ -127,12 +134,19 @@ const Home: NextPage = () => {
                       height={30}
                     />
                   </div>
-                  <div className="userText">{message}</div>
+                  <div className={styles.userText}>
+                    {message.split("\n").map((line, index) => (
+                      <>
+                        {line}
+                        <br />
+                      </>
+                    ))}
+                  </div>
                 </div>
-                {generatedBios && (
+                {generatedText && (
                   <>
-                    <div className="assistantBox">
-                      <div className="assistant">
+                    <div className={styles.assistantBox}>
+                      <div className={styles.assistant}>
                         <Image
                           alt="assistant"
                           src={`/images/assistant.svg`}
@@ -140,9 +154,31 @@ const Home: NextPage = () => {
                           height={30}
                         />
                       </div>
-                      <div className="assistantText">
-                        {generatedBios}
-          
+                      <div className={styles.assistantText}>
+                        <button
+                          className={styles.copyButton}
+                          onClick={copyHandler}
+                        >
+                          {!isCopied ? (
+                            <Image
+                              alt="copy"
+                              src={`/images/copy.svg`}
+                              width={20}
+                              height={20}
+                              className={styles.copyIcon}
+                            />
+                          ) : (
+                            <span>Copied!</span>
+                          )}
+                        </button>
+                        <div ref={resultRef}>
+                          {generatedText.split("\n").map((line, index) => (
+                            <>
+                              {line}
+                              <br />
+                            </>
+                          ))}
+                        </div>
                       </div>
                     </div>
                   </>
@@ -175,10 +211,10 @@ const Home: NextPage = () => {
 
             <button className={styles.chatButton} onClick={sendHandler}>
               <Image
-                width="25"
-                height="25"
+                width={25}
+                height={25}
                 src={`/images/submit.svg`}
-                alt="search"
+                alt="submit"
               />
             </button>
           </div>
