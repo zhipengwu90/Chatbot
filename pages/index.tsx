@@ -129,7 +129,7 @@ const Home: NextPage = () => {
                   </div>
                   <div className="userText">{message}</div>
                 </div>
-                { (
+                {generatedBios && (
                   <>
                     <div className="assistantBox">
                       <div className="assistant">
@@ -141,7 +141,7 @@ const Home: NextPage = () => {
                         />
                       </div>
                       <div className="assistantText">
-                        {/* {generatedBios
+                        {generatedBios
                           .substring(generatedBios.indexOf("0"))
                           .split("2.")
                           .map((generatedBio) => {
@@ -150,8 +150,8 @@ const Home: NextPage = () => {
                                 <p>{generatedBio}</p>
                               </div>
                             );
-                          })} */}
-                          Once upon a time, in a small village nestled at the foot of a mountain, there lived a young girl named Lily. She was known throughout the village for her kind heart and her love of adventure. One day, while exploring the woods near her home, Lily stumbled upon an old, abandoned cottage. It was hidden away amongst the trees, and she had never seen it before. Curiosity getting the better of her, she decided to investigate. As she approached the cottage, she noticed that the door was slightly ajar. Without thinking, she pushed it open and stepped inside. The interior was dark and musty, and she had to squint to make out the shapes of the objects around her. Suddenly, she heard a noise behind her, and she spun around to see a small, wrinkled old man standing in the doorway. “What are you doing here?” he demanded, his voice gruff. “I/’m sorry,” Lily stammered, “I didn/’t know anyone lived
+                          })}
+          
                       </div>
                     </div>
                   </>
