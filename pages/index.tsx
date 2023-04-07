@@ -18,7 +18,7 @@ const Home: NextPage = () => {
   const chatContentRef = useRef<null | HTMLDivElement>(null);
 
   const passwordRef = useRef<HTMLInputElement | null>(null);
-  const [isValid, setIsValid] = useState(true);
+  const [isValid, setIsValid] = useState(false);
 
   // type Conversation = Array<ConversationItem>;
   useEffect(() => {
