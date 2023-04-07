@@ -2,8 +2,6 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import { useRef, useState, useEffect } from "react";
-import { Toaster, toast } from "react-hot-toast";
-
 import styles from "../styles/Home.module.css";
 
 const Home: NextPage = () => {
@@ -16,19 +14,19 @@ const Home: NextPage = () => {
   const [message, setMessage] = useState<String>("");
   const [loading, setLoading] = useState(false);
   const [prompt, setPrompt] = useState("");
-  const [conversation, setConversation] = useState<Conversation>([]);
+  // const [conversation, setConversation] = useState<Conversation>([]);
   const chatContentRef = useRef<null | HTMLDivElement>(null);
 
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const [isValid, setIsValid] = useState(true);
 
-  type Conversation = Array<ConversationItem>;
+  // type Conversation = Array<ConversationItem>;
   useEffect(() => {
     // Scroll to the bottom of the chat content container
     if (chatContentRef.current) {
       chatContentRef.current.scrollTop = chatContentRef.current.scrollHeight;
     }
-  }, [conversation]);
+  }, [generatedBios, message]);
 
   const sendHandler = async () => {
     if (prompt === "") return;
@@ -125,25 +123,25 @@ const Home: NextPage = () => {
                     <Image
                       alt="user"
                       src={`/images/user.svg`}
-                      width="35"
-                      height="30"
+                      width={35}
+                      height={30}
                     />
                   </div>
                   <div className="userText">{message}</div>
                 </div>
-                {generatedBios && (
+                { (
                   <>
                     <div className="assistantBox">
                       <div className="assistant">
                         <Image
                           alt="assistant"
                           src={`/images/assistant.svg`}
-                          width="35"
-                          height="30"
+                          width={35}
+                          height={30}
                         />
                       </div>
                       <div className="assistantText">
-                        {generatedBios
+                        {/* {generatedBios
                           .substring(generatedBios.indexOf("0"))
                           .split("2.")
                           .map((generatedBio) => {
@@ -152,7 +150,8 @@ const Home: NextPage = () => {
                                 <p>{generatedBio}</p>
                               </div>
                             );
-                          })}
+                          })} */}
+                          Once upon a time, in a small village nestled at the foot of a mountain, there lived a young girl named Lily. She was known throughout the village for her kind heart and her love of adventure. One day, while exploring the woods near her home, Lily stumbled upon an old, abandoned cottage. It was hidden away amongst the trees, and she had never seen it before. Curiosity getting the better of her, she decided to investigate. As she approached the cottage, she noticed that the door was slightly ajar. Without thinking, she pushed it open and stepped inside. The interior was dark and musty, and she had to squint to make out the shapes of the objects around her. Suddenly, she heard a noise behind her, and she spun around to see a small, wrinkled old man standing in the doorway. “What are you doing here?” he demanded, his voice gruff. “I/’m sorry,” Lily stammered, “I didn/’t know anyone lived
                       </div>
                     </div>
                   </>

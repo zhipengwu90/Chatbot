@@ -2,46 +2,47 @@
 @tailwind components;
 @tailwind utilities;
 
-
 .assistant {
-    padding: 2px;
-    border-radius: 50%;
-    background-color: aquamarine;
-    margin-right: 8px;
-    box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.2);
-  }
-  .user {
-    padding: 0px;
-    border-radius: 50%;
-    background-color: rgb(221, 42, 42);
-    margin-left: 8px;
-    box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.2);
-  }
-  .assistantBox {
-    margin-bottom: 15px;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    width: 100%;
-  }
-  .userBox {
-    margin-bottom: 15px;
-    display: flex;
-    flex-direction: row-reverse;
-    align-items: center;
-    width: 100%;
-  }
-  .userText {
-    padding: 10px;
-    background-color: #1cb0fa;
-    border-radius: 10px;
-    box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.2);
-    color: #ffffff;
-  }
-  .assistantText {
-    padding: 10px;
-    background-color: #f0f0f0c4;
-    border-radius: 10px;
-    box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.2);
-  }
-  
+  flex: none;
+  padding: 2px;
+  border-radius: 50%;
+  background-color: aquamarine;
+  margin-right: 8px;
+  box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.2);
+}
+.user {
+  flex: none;
+  padding: 0px;
+  border-radius: 50%;
+  background-color: rgb(221, 42, 42);
+  margin-left: 8px;
+  box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.2);
+}
+.assistantBox {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 93%;
+}
+.userBox {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  width: 100%;
+}
+.userText {
+  padding: 10px;
+  background-color: #1cb0fa;
+  border-radius: 10px;
+  box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.2);
+  color: #ffffff;
+}
+.assistantText {
+  padding: 10px;
+  background-color: #f0f0f0c4;
+  border-radius: 10px;
+  box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.2);
+}
