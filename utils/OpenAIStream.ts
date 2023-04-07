@@ -18,7 +18,7 @@ export interface OpenAIStreamPayload {
   top_p: number;
   frequency_penalty: number;
   presence_penalty: number;
-  max_tokens: number;
+
   stream: boolean;
   n: number;
 }
@@ -72,9 +72,9 @@ export async function OpenAIStream(payload: OpenAIStreamPayload) {
       // https://web.dev/streams/#asynchronous-iteration
       for await (const chunk of res.body as any) {
         parser.feed(decoder.decode(chunk));
+        
       }
     },
   });
-
   return stream;
 }

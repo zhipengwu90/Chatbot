@@ -6,16 +6,13 @@ if (!process.env.OPENAI_API_KEY) {
 
 export const config = {
   runtime: "edge",
-  env: {
-    INVOCATION_TIMEOUT_MS: "30000" // set the timeout to 10 seconds
-  }
 };
 
 const handler = async (req: Request): Promise<Response> => {
   const { prompt } = (await req.json()) as {
     prompt?: string;
   };
-
+console.log(prompt);
   if (!prompt) {
     return new Response("No prompt in the request", { status: 400 });
   }
@@ -27,7 +24,6 @@ const handler = async (req: Request): Promise<Response> => {
     top_p: 1,
     frequency_penalty: 0,
     presence_penalty: 0,
-    max_tokens: 4000,
     stream: true,
     n: 1,
   };

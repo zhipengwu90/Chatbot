@@ -18,7 +18,7 @@ const Home: NextPage = () => {
   const chatContentRef = useRef<null | HTMLDivElement>(null);
 
   const passwordRef = useRef<HTMLInputElement | null>(null);
-  const [isValid, setIsValid] = useState(false);
+  const [isValid, setIsValid] = useState(true);
 
   // type Conversation = Array<ConversationItem>;
   useEffect(() => {
@@ -38,7 +38,7 @@ const Home: NextPage = () => {
     //   { role: "user", content: prompt },
     // ]);
     setLoading(true);
-
+    
     const response = await fetch("/api/generate", {
       method: "POST",
       headers: {
