@@ -144,7 +144,7 @@ const Home: NextPage = () => {
                       </div>
                       <div className="assistantText">
                         {generatedBios
-                          .substring(generatedBios.indexOf("0") + 3)
+                          .substring(generatedBios.indexOf("0"))
                           .split("2.")
                           .map((generatedBio) => {
                             return (
