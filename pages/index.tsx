@@ -34,10 +34,11 @@ const Home: NextPage = () => {
     if (prompt === "") return;
     setMessage(prompt);
     setPrompt("");
-    setConversation((prev: Conversation) => [
-      ...prev,
-      { role: "user", content: prompt },
-    ]);
+    setGeneratedBios("");
+    // setConversation((prev: Conversation) => [
+    //   ...prev,
+    //   { role: "user", content: prompt },
+    // ]);
     setLoading(true);
 
     const response = await fetch("/api/generate", {
@@ -143,7 +144,7 @@ const Home: NextPage = () => {
                       </div>
                       <div className="assistantText">
                         {generatedBios
-                          .substring(generatedBios.indexOf("1") + 3)
+                          .substring(generatedBios.indexOf("0") + 3)
                           .split("2.")
                           .map((generatedBio) => {
                             return (
