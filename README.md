@@ -23,5 +23,4 @@ npm run dev
 
 Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=vercel-examples):
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/zhipengwu90/openai-stream&env=OPENAI_API_KEY&project-name=openai-stream
-&repo-name=openai-stream)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/zhipengwu90/openai-stream&env=OPENAI_API_KEY&project-name=openai-stream&repo-name=openai-stream)
