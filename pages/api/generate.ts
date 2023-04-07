@@ -6,6 +6,9 @@ if (!process.env.OPENAI_API_KEY) {
 
 export const config = {
   runtime: "edge",
+  env: {
+    INVOCATION_TIMEOUT_MS: "30000" // set the timeout to 10 seconds
+  }
 };
 
 const handler = async (req: Request): Promise<Response> => {
