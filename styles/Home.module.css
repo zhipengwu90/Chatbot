@@ -219,3 +219,80 @@
   font-size: 14px;
   color: #898484;
 }
+.buttonBox{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 5px;
+  margin-top: 10px;
+}
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 1;
+  background: rgba(0, 0, 0, 0.75);
+}
+
+
+.settingWrapper {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+ z-index: 9999;
+  min-width: 300px;
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+}
+
+.settingWrapper label {
+  display: inline-block;
+  margin-bottom: 10px;
+  font-weight: 600;
+  font-size: 16px;
+  color: #333;
+  margin-left: 10px;
+  z-index: 9999;
+
+}
+
+
+
+
+.confirmButton {
+  display: block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 16px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  z-index: 9999;
+}
+
+.confirmButton:hover {
+  background-color: #0062cc;
+}
+
+.confirmButtonBox{
+  display: flex;
+  justify-content: center;
+
+}
+.warning{
+  color: red;
+  font-size: 12px;
+}
+.warning span{
+  color: red;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: underline;
+}

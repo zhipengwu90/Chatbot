@@ -5,13 +5,13 @@ import { useRef, useState, useEffect } from "react";
 import styles from "../styles/Home.module.css";
 
 const Home: NextPage = () => {
-
-
   const [generatedText, setGeneratedText] = useState<String>("");
   const [message, setMessage] = useState<String>("");
   const [loading, setLoading] = useState(false);
   const [prompt, setPrompt] = useState("");
   const [isCopied, setIsCopied] = useState(false);
+  const [isSetting, setIsSetting] = useState(false);
+  const [gptModel, setGptModel] = useState("gpt-3.5-turbo");
 
   const chatContentRef = useRef<null | HTMLDivElement>(null);
 
@@ -40,6 +40,7 @@ const Home: NextPage = () => {
       },
       body: JSON.stringify({
         prompt,
+        model: gptModel,
       }),
     });
     if (!response.ok) {
@@ -101,11 +102,16 @@ const Home: NextPage = () => {
     window.getSelection()?.removeAllRanges();
     window.getSelection()?.addRange(range);
     document.execCommand("copy");
+
     setIsCopied(true);
-    setIsCopied(true);
+
     setTimeout(() => {
       setIsCopied(false);
     }, 1500);
+  };
+
+  const settingHander = () => {
+    setIsSetting((prev) => !prev);
   };
 
   return (
@@ -113,6 +119,49 @@ const Home: NextPage = () => {
       <Head>
         <link rel="shortcut icon" href="/favicon.ico" />
       </Head>
+
+      {isSetting && (
+        <>
+          <div
+            className={styles.backdrop}
+            onClick={() => setIsSetting(false)}
+          />
+          
+          <div className={styles.settingWrapper}>
+            <div className={styles.radios}>
+              <input
+                type="radio"
+                name="model"
+                value="gpt-3.5-turbo"
+                checked={gptModel === "gpt-3.5-turbo"}
+                onChange={(e) => setGptModel(e.target.value)}
+              />
+              <label htmlFor="gpt-3.5-turbo">GPT-3.5-Turbo</label>
+            </div>
+            <div className={styles.radios}>
+              <input
+                type="radio"
+                name="model"
+                value="gpt-4"
+                checked={gptModel === "gpt-4"}
+                onChange={(e) => setGptModel(e.target.value)}
+              />
+              <label htmlFor="gpt-4">GPT-4</label>
+            </div>
+            <div className={styles.warning}>
+           
+                <span>Warning:</span> Only use GPT-3.5-Turbo here, because GPT-4 is too expensive.
+             
+            </div>
+            <div className={styles.confirmButtonBox}>
+              <button className={styles.confirmButton} onClick={settingHander}>
+                Confirm
+              </button>
+            </div>
+          </div>
+        </>
+      )}
+
       {isValid ? (
         <>
           <div ref={chatContentRef} className={styles.chatContent}>
@@ -208,15 +257,25 @@ const Home: NextPage = () => {
                 }
               }}
             />
+            <div className={styles.buttonBox}>
+              <button className={styles.chatButton} onClick={settingHander}>
+                <Image
+                  width={25}
+                  height={25}
+                  src={`/images/setting.svg`}
+                  alt="setting"
+                />
+              </button>
 
-            <button className={styles.chatButton} onClick={sendHandler}>
-              <Image
-                width={25}
-                height={25}
-                src={`/images/submit.svg`}
-                alt="submit"
-              />
-            </button>
+              <button className={styles.chatButton} onClick={sendHandler}>
+                <Image
+                  width={25}
+                  height={25}
+                  src={`/images/submit.svg`}
+                  alt="submit"
+                />
+              </button>
+            </div>
           </div>
         </>
       ) : (
