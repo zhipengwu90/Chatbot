@@ -3,15 +3,22 @@ import Head from "next/head";
 import Image from "next/image";
 import { useRef, useState, useEffect } from "react";
 import styles from "../styles/Home.module.css";
+import User from "./components/User";
+import Assistant from "./components/Assistant";
 
 const Home: NextPage = () => {
-  const [generatedText, setGeneratedText] = useState<String>("");
-  const [message, setMessage] = useState<String>("");
+  const [generatedText, setGeneratedText] = useState<string>("");
+  const [message, setMessage] = useState<string>("");
   const [loading, setLoading] = useState(false);
   const [prompt, setPrompt] = useState("");
-  const [isCopied, setIsCopied] = useState(false);
   const [isSetting, setIsSetting] = useState(false);
   const [gptModel, setGptModel] = useState("gpt-3.5-turbo");
+
+  interface Message {
+    user: typeof message;
+    assistant: typeof generatedText;
+  }
+  const [conversation, setConversation] = useState<Message[]>([]);
 
   const chatContentRef = useRef<null | HTMLDivElement>(null);
 
@@ -28,6 +35,18 @@ const Home: NextPage = () => {
 
   const sendHandler = async () => {
     if (prompt === "") return;
+
+    // Add the message to the conversation
+    if (message !== "" || generatedText !== "") {
+      setConversation((prev) => [
+        ...prev,
+        {
+          user: message,
+          assistant: generatedText,
+        },
+      ]);
+    }
+
     setMessage(prompt);
     setPrompt("");
     setGeneratedText("");
@@ -95,20 +114,6 @@ const Home: NextPage = () => {
       </div>
     );
   };
-  const copyHandler = () => {
-    if (resultRef.current === null) return;
-    const range = document.createRange();
-    range.selectNode(resultRef.current);
-    window.getSelection()?.removeAllRanges();
-    window.getSelection()?.addRange(range);
-    document.execCommand("copy");
-
-    setIsCopied(true);
-
-    setTimeout(() => {
-      setIsCopied(false);
-    }, 1500);
-  };
 
   const settingHander = () => {
     setIsSetting((prev) => !prev);
@@ -126,7 +131,7 @@ const Home: NextPage = () => {
             className={styles.backdrop}
             onClick={() => setIsSetting(false)}
           />
-          
+
           <div className={styles.settingWrapper}>
             <div className={styles.radios}>
               <input
@@ -149,9 +154,8 @@ const Home: NextPage = () => {
               <label htmlFor="gpt-4">GPT-4</label>
             </div>
             <div className={styles.warning}>
-           
-                <span>Warning:</span> Only use GPT-3.5-Turbo here, because GPT-4 is too expensive.
-             
+              <span>Warning:</span> Only use GPT-3.5-Turbo here, because GPT-4
+              is too expensive.
             </div>
             <div className={styles.confirmButtonBox}>
               <button className={styles.confirmButton} onClick={settingHander}>
@@ -174,64 +178,23 @@ const Home: NextPage = () => {
               </div>
             ) : (
               <>
-                <div className={styles.userBox}>
-                  <div className={styles.user}>
-                    <Image
-                      alt="user"
-                      src={`/images/user.svg`}
-                      width={35}
-                      height={30}
-                    />
-                  </div>
-                  <div className={styles.userText}>
-                    {message.split("\n").map((line, index) => (
-                      <>
-                        {line}
-                        <br />
-                      </>
-                    ))}
-                  </div>
-                </div>
-                {generatedText && (
-                  <>
-                    <div className={styles.assistantBox}>
-                      <div className={styles.assistant}>
-                        <Image
-                          alt="assistant"
-                          src={`/images/assistant.svg`}
-                          width={35}
-                          height={30}
+                {conversation &&
+                  conversation.map((item, index) => (
+                    <>
+                      {item.user && (
+                        <User message={item.user} key={index + "user"} />
+                      )}
+                      {item.assistant && (
+                        <Assistant
+                          generatedText={item.assistant}
+                          key={index + "assistant"}
                         />
-                      </div>
-                      <div className={styles.assistantText}>
-                        <button
-                          className={styles.copyButton}
-                          onClick={copyHandler}
-                        >
-                          {!isCopied ? (
-                            <Image
-                              alt="copy"
-                              src={`/images/copy.svg`}
-                              width={20}
-                              height={20}
-                              className={styles.copyIcon}
-                            />
-                          ) : (
-                            <span>Copied!</span>
-                          )}
-                        </button>
-                        <div ref={resultRef}>
-                          {generatedText.split("\n").map((line, index) => (
-                            <>
-                              {line}
-                              <br />
-                            </>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </>
-                )}
+                      )}
+                    </>
+                  ))}
+
+                <User message={message} />
+                {generatedText && <Assistant generatedText={generatedText} />}
               </>
             )}
 

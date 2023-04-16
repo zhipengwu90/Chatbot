@@ -1,0 +1,23 @@
+.user {
+    flex: none;
+    padding: 0px;
+    border-radius: 50%;
+    background-color: rgb(221, 42, 42);
+    margin-left: 8px;
+    box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.2);
+  }
+  .userBox {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: flex-start;
+    width: 100%;
+  }
+  .userText {
+    padding: 10px;
+    background-color: #1cb0fa;
+    border-radius: 10px;
+    box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.2);
+    color: #ffffff;
+    max-width: 90%;
+  }
