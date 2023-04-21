@@ -1,6 +1,6 @@
 ## Chatbot
 
-This project fork from Twitter bios [Github Link](https://github.com/Nutlope/twitterbio)
+This project forks from Twitter bios [Github Link](https://github.com/Nutlope/twitterbio)
 
 
 

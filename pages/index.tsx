@@ -71,13 +71,15 @@ const Home: NextPage = () => {
     if (!data) {
       return;
     }
-
+    // Read the data from the ReadableStream, data.getReader() is a ReadableStreamDefaultReader
     const reader = data.getReader();
     const decoder = new TextDecoder();
     let done = false;
     while (!done) {
+      //reader.read() returns a promise with an object containing the value and a done boolean { value: theChunk, done: false }.
       const { value, done: doneReading } = await reader.read();
       done = doneReading;
+      
       const chunkValue = decoder.decode(value);
       setGeneratedText((prev) => prev + chunkValue);
     }
