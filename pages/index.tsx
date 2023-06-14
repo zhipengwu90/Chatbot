@@ -47,9 +47,7 @@ const Home: NextPage = () => {
         },
       ]);
     }
-    
-    
-    
+
     setMessage(prompt);
     setPrompt("");
     setGeneratedText("");
@@ -82,7 +80,7 @@ const Home: NextPage = () => {
       //reader.read() returns a promise with an object containing the value and a done boolean { value: theChunk, done: false }.
       const { value, done: doneReading } = await reader.read();
       done = doneReading;
-      
+
       const chunkValue = decoder.decode(value);
       setGeneratedText((prev) => prev + chunkValue);
     }
@@ -182,9 +180,10 @@ const Home: NextPage = () => {
               <span>Warning:</span> Only use GPT-3.5-Turbo here, because GPT-4
               is too expensive.
               <br />
-              <span>16k/</span><span>32k:</span> This model offers four times the context length of the base model .
+              <span>16k/</span>
+              <span>32k:</span> This model offers four times the context length
+              of the base model .
               <br />
-         
             </div>
             <div className={styles.confirmButtonBox}>
               <button className={styles.confirmButton} onClick={settingHandler}>
@@ -200,28 +199,33 @@ const Home: NextPage = () => {
                 </tr>
               </thead>
               <tbody>
-              <tr>
-                <td>GPT-3.5-Turbo</td>
-                <td>$0.0015 / 1K tokens</td>
-                <td>$0.002 / 1K tokens</td>
-              </tr>
-              <tr>
-                <td>GPT-3.5-Turbo-16k</td>
-                <td>$0.002 / 1K tokens</td>
-                <td>$0.003 / 1K tokens</td>
-              </tr>
-              <tr>
-                <td>GPT-4</td>
-                <td>$0.03 / 1K tokens</td>
-                <td>$0.06 / 1K tokens</td>
-              </tr>
-              <tr>
-                <td>GPT-4-32k</td>
-                <td>$0.06 / 1K tokens</td>
-                <td>$0.12 / 1K tokens</td>
-              </tr>
+                <tr>
+                  <td>GPT-3.5-Turbo</td>
+                  <td>$0.0015 / 1K tokens</td>
+                  <td>$0.002 / 1K tokens</td>
+                </tr>
+                <tr>
+                  <td>GPT-3.5-Turbo-16k</td>
+                  <td>$0.002 / 1K tokens</td>
+                  <td>$0.003 / 1K tokens</td>
+                </tr>
+                <tr>
+                  <td>GPT-4</td>
+                  <td>$0.03 / 1K tokens</td>
+                  <td>$0.06 / 1K tokens</td>
+                </tr>
+                <tr>
+                  <td>GPT-4-32k</td>
+                  <td>$0.06 / 1K tokens</td>
+                  <td>$0.12 / 1K tokens</td>
+                </tr>
               </tbody>
             </table>
+
+            <div className={styles.warning}>
+              <span>Tokens: </span>
+              For English text, 1 token is approximately 4 characters or 0.75 words.
+            </div>
           </div>
         </>
       )}
