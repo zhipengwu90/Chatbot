@@ -13,6 +13,7 @@ const Home: NextPage = () => {
   const [prompt, setPrompt] = useState("");
   const [isSetting, setIsSetting] = useState(false);
   const [gptModel, setGptModel] = useState("gpt-3.5-turbo");
+  const [sendPrevious, setSendPrevious] = useState(false);
 
   interface Message {
     user: typeof message;
@@ -46,7 +47,9 @@ const Home: NextPage = () => {
         },
       ]);
     }
-
+    
+    
+    
     setMessage(prompt);
     setPrompt("");
     setGeneratedText("");
@@ -117,7 +120,7 @@ const Home: NextPage = () => {
     );
   };
 
-  const settingHander = () => {
+  const settingHandler = () => {
     setIsSetting((prev) => !prev);
   };
 
@@ -149,21 +152,76 @@ const Home: NextPage = () => {
               <input
                 type="radio"
                 name="model"
+                value="gpt-3.5-turbo-16k"
+                checked={gptModel === "gpt-3.5-turbo-16k"}
+                onChange={(e) => setGptModel(e.target.value)}
+              />
+              <label htmlFor="GPT-3.5-turbo-16k">GPT-3.5-turbo-16k</label>
+            </div>
+            <div className={styles.radios}>
+              <input
+                type="radio"
+                name="model"
                 value="gpt-4"
                 checked={gptModel === "gpt-4"}
                 onChange={(e) => setGptModel(e.target.value)}
               />
               <label htmlFor="gpt-4">GPT-4</label>
             </div>
+            <div className={styles.radios}>
+              <input
+                type="radio"
+                name="model"
+                value="gpt-4-32k"
+                checked={gptModel === "gpt-4-32k"}
+                onChange={(e) => setGptModel(e.target.value)}
+              />
+              <label htmlFor="gpt-4-32k">GPT-4-32k</label>
+            </div>
             <div className={styles.warning}>
               <span>Warning:</span> Only use GPT-3.5-Turbo here, because GPT-4
               is too expensive.
+              <br />
+              <span>16k/</span><span>32k:</span> This model offers four times the context length of the base model .
+              <br />
+         
             </div>
             <div className={styles.confirmButtonBox}>
-              <button className={styles.confirmButton} onClick={settingHander}>
+              <button className={styles.confirmButton} onClick={settingHandler}>
                 Confirm
               </button>
             </div>
+            <table className={styles.tableText}>
+              <thead>
+                <tr>
+                  <th>Model</th>
+                  <th>Input</th>
+                  <th>Output</th>
+                </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td>GPT-3.5-Turbo</td>
+                <td>$0.0015 / 1K tokens</td>
+                <td>$0.002 / 1K tokens</td>
+              </tr>
+              <tr>
+                <td>GPT-3.5-Turbo-16k</td>
+                <td>$0.002 / 1K tokens</td>
+                <td>$0.003 / 1K tokens</td>
+              </tr>
+              <tr>
+                <td>GPT-4</td>
+                <td>$0.03 / 1K tokens</td>
+                <td>$0.06 / 1K tokens</td>
+              </tr>
+              <tr>
+                <td>GPT-4-32k</td>
+                <td>$0.06 / 1K tokens</td>
+                <td>$0.12 / 1K tokens</td>
+              </tr>
+              </tbody>
+            </table>
           </div>
         </>
       )}
@@ -177,6 +235,7 @@ const Home: NextPage = () => {
                 <p>
                   Ask me something, I will enlighten your mind with knowledge.
                 </p>
+                <p></p>
               </div>
             ) : (
               <>
@@ -223,7 +282,7 @@ const Home: NextPage = () => {
               }}
             />
             <div className={styles.buttonBox}>
-              <button className={styles.chatButton} onClick={settingHander}>
+              <button className={styles.chatButton} onClick={settingHandler}>
                 <Image
                   width={25}
                   height={25}
