@@ -130,6 +130,7 @@ const Home: NextPage = () => {
     <div className={styles.container}>
       <Head>
         <link rel="shortcut icon" href="/favicon.ico" />
+        <title>Chat Bot</title>
       </Head>
 
       {isSetting && (
