@@ -34,6 +34,7 @@ const Home: NextPage = () => {
     }
   }, [generatedText, message]);
 
+
   const sendHandler = async () => {
     if (prompt === "") return;
 
@@ -48,12 +49,14 @@ const Home: NextPage = () => {
       ]);
     }
 
+
     setMessage(prompt);
     setPrompt("");
     setGeneratedText("");
     setLoading(true);
 
     const response = await fetch("/api/generate", {
+      
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -63,6 +66,7 @@ const Home: NextPage = () => {
         model: gptModel,
       }),
     });
+    
     if (!response.ok) {
       throw new Error(response.statusText);
     }
@@ -170,8 +174,8 @@ const Home: NextPage = () => {
               <input
                 type="radio"
                 name="model"
-                value="gpt-4-32k"
-                checked={gptModel === "gpt-4-32k"}
+                value="gpt-4-0314"
+                checked={gptModel === "gpt-4-0314"}
                 onChange={(e) => setGptModel(e.target.value)}
               />
               <label htmlFor="gpt-4-32k">GPT-4-32k</label>

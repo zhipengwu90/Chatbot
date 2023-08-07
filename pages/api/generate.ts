@@ -1,4 +1,19 @@
-import { OpenAIStream, OpenAIStreamPayload } from "../../utils/OpenAIStream";
+
+import { OpenAIStream, OpenAIStreamPayload, ChatGPTMessage } from "../../utils/OpenAIStream";
+
+// type MyObject = {
+//   role: string;
+//   message: string;
+// };
+
+// const myPrompt: MyObject[] = [
+
+// ];
+
+// const myPrompt: ChatGPTMessage[] = [
+// message 
+// ]
+
 
 if (!process.env.OPENAI_API_KEY) {
   throw new Error("Missing env var from OpenAI");
