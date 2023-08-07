@@ -170,7 +170,7 @@ const Home: NextPage = () => {
               />
               <label htmlFor="gpt-4">GPT-4</label>
             </div>
-            <div className={styles.radios}>
+            {/* <div className={styles.radios}>
               <input
                 type="radio"
                 name="model"
@@ -179,13 +179,12 @@ const Home: NextPage = () => {
                 onChange={(e) => setGptModel(e.target.value)}
               />
               <label htmlFor="gpt-4-32k">GPT-4-32k</label>
-            </div>
+            </div> */}
             <div className={styles.warning}>
               <span>Warning:</span> Only use GPT-3.5-Turbo here, because GPT-4
               is too expensive.
               <br />
-              <span>16k/</span>
-              <span>32k:</span> This model offers four times the context length
+              <span>16k:</span>This model offers four times the context length
               of the base model .
               <br />
             </div>
@@ -218,11 +217,11 @@ const Home: NextPage = () => {
                   <td>$0.03 / 1K tokens</td>
                   <td>$0.06 / 1K tokens</td>
                 </tr>
-                <tr>
+                {/* <tr>
                   <td>GPT-4-32k</td>
                   <td>$0.06 / 1K tokens</td>
                   <td>$0.12 / 1K tokens</td>
-                </tr>
+                </tr> */}
               </tbody>
             </table>
 
