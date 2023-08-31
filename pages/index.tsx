@@ -179,6 +179,16 @@ const Home: NextPage = () => {
           />
 
           <div className={styles.settingWrapper}>
+            <div className={styles.confirmButtonBox}>
+              <button className={styles.confirmButton} onClick={settingHandler}>
+                <Image
+                  width={23}
+                  height={23}
+                  alt="close"
+                  src="/images/close.svg"
+                />
+              </button>
+            </div>
             <div className={styles.radios}>
               <input
                 id="gpt-3.5-turbo"
@@ -211,6 +221,19 @@ const Home: NextPage = () => {
                 onChange={(e) => setGptModel(e.target.value)}
               />
               <label htmlFor="gpt-4">GPT-4</label>
+              <div className={styles.sendPrevious}>
+                <input
+                  type="checkbox"
+                  id="sendPrevious"
+                  name="sendPrevious"
+                  checked={sendPrevious}
+                  onChange={sendPreviousHandler}
+                />
+                <label htmlFor="sendPrevious"> Continuously Talk</label>
+              </div>
+              <div className={styles.warning}>
+                <span>Continuously Talk:</span> Send the most recent conversation with the current prompt. It will start from next prompt (not the current one)if you checked it.
+              </div>
             </div>
             {/* <div className={styles.radios}>
               <input
@@ -222,20 +245,15 @@ const Home: NextPage = () => {
               />
               <label htmlFor="gpt-4-32k">GPT-4-32k</label>
             </div> */}
-            <div className={styles.warning}>
+            {/* <div className={styles.warning}>
               <span>Warning:</span> Only use GPT-3.5-Turbo here, because GPT-4
               is too expensive.
               <br />
               <span>16k:</span>This model offers four times the context length
               of the base model .
               <br />
-            </div>
+            </div> */}
 
-            <div className={styles.confirmButtonBox}>
-              <button className={styles.confirmButton} onClick={settingHandler}>
-                Confirm
-              </button>
-            </div>
             <table className={styles.tableText}>
               <thead>
                 <tr>
@@ -269,18 +287,9 @@ const Home: NextPage = () => {
             </table>
 
             <div className={styles.warning}>
-              <span>Tokens: </span>
+              <span>Tokens:</span>
               For English text, 1 token is approximately 4 characters or 0.75
               words.
-            </div>
-            <div className={styles.sendPrevious}>
-              {sendPrevious ? (
-                <button onClick={sendPreviousHandler}>
-                  Without previous message
-                </button>
-              ) : (
-                <button onClick={sendPreviousHandler}> With previous message</button>
-              )}
             </div>
           </div>
         </>
@@ -288,7 +297,11 @@ const Home: NextPage = () => {
 
       {isValid ? (
         <>
-          <div className={styles.model}> Model: {gptModel}</div>
+          <div className={styles.model}>
+            <div> Model: {gptModel}</div>
+            <div>{sendPrevious && "Continuously Talk"}</div>
+          </div>
+
           <div ref={chatContentRef} className={styles.chatContent}>
             {!message ? (
               <div className={styles.startBox}>
