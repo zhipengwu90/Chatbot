@@ -25,17 +25,17 @@ export const config = {
 
 const handler = async (req: Request): Promise<Response> => {
   const { prompt, model } = (await req.json()) as {
-    prompt?: string;
+    prompt?: ChatGPTMessage[];
     model?: string;
   };
-console.log(model);
+console.log(prompt);
   if (!prompt) {
     return new Response("No prompt in the request", { status: 400 });
   }
 
   const payload: OpenAIStreamPayload = {
     model: model || "gpt-3.5-turbo",
-    messages: [{ role: "user", content: prompt }],
+    messages: prompt,
     temperature: 0.5,
     top_p: 1,
     frequency_penalty: 0,

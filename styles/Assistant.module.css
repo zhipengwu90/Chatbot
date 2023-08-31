@@ -1,11 +1,12 @@
 
 .assistant {
     flex: none;
-    padding: 2px;
+    padding: 3px;
     border-radius: 50%;
-    background-color: aquamarine;
+    background-color: rgb(255, 255, 255);
     margin-right: 8px;
-    box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.2);
+    border: #bababa 1px solid;
+    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
   }
 
   .assistantBox {
@@ -41,4 +42,15 @@
 .copyButton span{
   font-size: 14px;
   color: #898484;
+}
+
+.code pre{
+  margin: 10px 0;
+  border: #898484;
+  border-radius: 5px;
+  background-color: #111111;
+  padding: 15px;
+  color: #ffffff;
+  overflow-x: auto;
+  
 }

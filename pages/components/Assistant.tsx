@@ -48,7 +48,7 @@ const Assistant: React.FC<UserProps> = (props: UserProps) => {
               <span>Copied!</span>
             )}
           </button>
-          <div ref={resultRef}>
+          <div className={styles.code} ref={resultRef}>
             {/* {props.generatedText.split("\n").map((line, index) => (
               <>
                 {line}

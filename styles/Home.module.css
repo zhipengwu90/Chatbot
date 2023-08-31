@@ -74,7 +74,9 @@
     cursor: pointer;
     margin-left: 2px;
   }
-  
+  .submitIcon {
+    color: #0062cc;
+  }
   .chatButton:hover {
     border-radius: 10px;
     background-color: rgb(158, 210, 237);
@@ -239,4 +241,29 @@
 }
 .tableText th, .tableText td{
   border: 1px solid;
+}
+
+.model{
+  text-align: center;
+  color: #a5a5a5;
+  font-size: 11px;
+}
+
+.sendPrevious{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.sendPrevious button{
+
+  background-color: #7c7c7c;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-right: 10px;
+  
 }

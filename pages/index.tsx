@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, use } from "react";
 import styles from "../styles/Home.module.css";
 import User from "./components/User";
 import Assistant from "./components/Assistant";
@@ -15,12 +15,48 @@ const Home: NextPage = () => {
   const [gptModel, setGptModel] = useState("gpt-3.5-turbo");
   const [sendPrevious, setSendPrevious] = useState(false);
 
+  const sendPreviousHandler = () => {
+    setSendPrevious((prev) => !prev);
+  };
+
+  useEffect(() => {
+    if (message !== "" || generatedText !== "") {
+      if (sendPrevious) {
+        setMyPrompt(() => [
+          {
+            role: Role.User,
+            content: message,
+          },
+          {
+            role: Role.Assistant,
+            content: generatedText,
+          },
+        ]);
+      } else {
+        setMyPrompt(() => []);
+      }
+    }
+  }, [message, generatedText]);
+
   interface Message {
     user: typeof message;
     assistant: typeof generatedText;
   }
+  enum Role {
+    User = "user",
+    Assistant = "assistant",
+  }
+  interface messageType {
+    role: Role;
+    content: string;
+  }
+
+  const [myPrompt, setMyPrompt] = useState<messageType[]>([]);
+
   const [conversation, setConversation] = useState<Message[]>([]);
 
+  const submitIcon =
+    prompt === "" ? "/images/submit_grey.svg" : "/images/submit.svg";
   const chatContentRef = useRef<null | HTMLDivElement>(null);
 
   const passwordRef = useRef<HTMLInputElement | null>(null);
@@ -33,7 +69,6 @@ const Home: NextPage = () => {
       chatContentRef.current.scrollTop = chatContentRef.current.scrollHeight;
     }
   }, [generatedText, message]);
-
 
   const sendHandler = async () => {
     if (prompt === "") return;
@@ -49,24 +84,27 @@ const Home: NextPage = () => {
       ]);
     }
 
-
     setMessage(prompt);
     setPrompt("");
     setGeneratedText("");
     setLoading(true);
 
+    myPrompt.push({
+      role: Role.User,
+      content: prompt,
+    });
+    console.log(myPrompt);
     const response = await fetch("/api/generate", {
-      
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        prompt,
+        prompt: myPrompt,
         model: gptModel,
       }),
     });
-    
+
     if (!response.ok) {
       throw new Error(response.statusText);
     }
@@ -143,6 +181,7 @@ const Home: NextPage = () => {
           <div className={styles.settingWrapper}>
             <div className={styles.radios}>
               <input
+                id="gpt-3.5-turbo"
                 type="radio"
                 name="model"
                 value="gpt-3.5-turbo"
@@ -153,6 +192,7 @@ const Home: NextPage = () => {
             </div>
             <div className={styles.radios}>
               <input
+                id="GPT-3.5-turbo-16k"
                 type="radio"
                 name="model"
                 value="gpt-3.5-turbo-16k"
@@ -163,6 +203,7 @@ const Home: NextPage = () => {
             </div>
             <div className={styles.radios}>
               <input
+                id="gpt-4"
                 type="radio"
                 name="model"
                 value="gpt-4"
@@ -189,6 +230,7 @@ const Home: NextPage = () => {
               of the base model .
               <br />
             </div>
+
             <div className={styles.confirmButtonBox}>
               <button className={styles.confirmButton} onClick={settingHandler}>
                 Confirm
@@ -228,7 +270,17 @@ const Home: NextPage = () => {
 
             <div className={styles.warning}>
               <span>Tokens: </span>
-              For English text, 1 token is approximately 4 characters or 0.75 words.
+              For English text, 1 token is approximately 4 characters or 0.75
+              words.
+            </div>
+            <div className={styles.sendPrevious}>
+              {sendPrevious ? (
+                <button onClick={sendPreviousHandler}>
+                  Without previous message
+                </button>
+              ) : (
+                <button onClick={sendPreviousHandler}> With previous message</button>
+              )}
             </div>
           </div>
         </>
@@ -236,6 +288,7 @@ const Home: NextPage = () => {
 
       {isValid ? (
         <>
+          <div className={styles.model}> Model: {gptModel}</div>
           <div ref={chatContentRef} className={styles.chatContent}>
             {!message ? (
               <div className={styles.startBox}>
@@ -300,12 +353,7 @@ const Home: NextPage = () => {
               </button>
 
               <button className={styles.chatButton} onClick={sendHandler}>
-                <Image
-                  width={25}
-                  height={25}
-                  src={`/images/submit.svg`}
-                  alt="submit"
-                />
+                <Image width={25} height={25} src={submitIcon} alt="submit" />
               </button>
             </div>
           </div>
