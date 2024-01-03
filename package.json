@@ -21,7 +21,8 @@
     "react-hot-toast": "^2.4.0",
     "react-markdown": "^8.0.7",
     "react-use-measure": "^2.1.1",
-    "sharp": "^0.33.1"
+    "sharp": "^0.33.1",
+    "stream": "^0.0.2"
   },
   "devDependencies": {
     "@types/node": "18.11.3",

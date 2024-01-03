@@ -51,20 +51,60 @@ const Image: NextPage = () => {
     );
   };
 
+  //   function getImages() {
+  //     if (prompt != "") {
+  //       setError(false);
+  //       setLoading(true);
+  //       axios
+  //         .post(`/api/images?p=${prompt}&n=${number}&m=${model}`)
+  //         .then((res) => {
+  //           setResults(res.data.result);
+  //           setLoading(false);
+  //         })
+  //         .catch((err) => {
+  //           setLoading(false);
+  //           setError(true);
+  //         });
+  //     } else {
+  //       setError(true);
+  //     }
+  //   }
+
+  const POLLING_INTERVAL = 5000; // Polling interval in milliseconds (e.g., 5 seconds)
+  const MAX_POLLING_DURATION = 35000;
   function getImages() {
-    if (prompt != "") {
+    if (prompt !== "") {
       setError(false);
       setLoading(true);
-      axios
-        .post(`/api/images?p=${prompt}&n=${number}&m=${model}`)
-        .then((res) => {
-          setResults(res.data.result);
-          setLoading(false);
-        })
-        .catch((err) => {
+
+      // Function to poll the API with timeout
+    const pollApiWithTimeout = (startTime: number) => {
+        if (Date.now() - startTime > MAX_POLLING_DURATION) {
+          // Stop polling if the maximum duration is reached
           setLoading(false);
           setError(true);
-        });
+          return;
+        }
+
+        axios
+          .post(`/api/images?p=${prompt}&n=${number}&m=${model}`)
+          .then((res) => {
+            if (res.data.result) {
+              setResults(res.data.result);
+              setLoading(false);
+            } else {
+              // If the result is not available yet, continue polling
+              setTimeout(() => pollApiWithTimeout(startTime), POLLING_INTERVAL);
+            }
+          })
+          .catch((err) => {
+            setLoading(false);
+            setError(true);
+          });
+      };
+
+      // Start polling the API with timeout
+      pollApiWithTimeout(Date.now());
     } else {
       setError(true);
     }
@@ -86,8 +126,6 @@ const Image: NextPage = () => {
       });
   }
 
-
-
   return (
     <>
       {isValid ? (
@@ -96,7 +134,7 @@ const Image: NextPage = () => {
 
           <main className={styles.main}>
             <h1 className={styles.title}>
-              Create images with 
+              Create images with
               <span className={styles.titleColor}> DALL-E</span>
             </h1>
             <p className={styles.description}>
@@ -164,13 +202,13 @@ const Image: NextPage = () => {
             )}
             {loading && <p>Loading...</p>}
             <div className={styles.grid}>
-              {results.map((result: ResultType)  => {
+              {results.map((result: ResultType) => {
                 return (
                   <div className={styles.card}>
                     <img
                       className={styles.imgPreview}
-                    src={result?.url}
-                    onClick={() => download(result?.url ?? '')}
+                      src={result?.url}
+                      onClick={() => download(result?.url ?? "")}
                     />
                   </div>
                 );
