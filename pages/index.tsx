@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
-import { useRef, useState, useEffect, use } from "react";
+import { useRef, useState, useEffect } from "react";
 import styles from "../styles/Home.module.css";
 import User from "./components/User";
 import Assistant from "./components/Assistant";
