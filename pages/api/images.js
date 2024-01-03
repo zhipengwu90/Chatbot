@@ -2,12 +2,12 @@ import { OpenAI } from "openai";
 
 export default async function handler(req, res) {
   console.log(req.query.m);
-  if (!process.env.DALL_E_API_KEY) {
+  if (!process.env.OPENAI_API_KEY) {
     throw new Error("Missing env var from OpenAI");
   }
 
   const openai = new OpenAI({
-    apiKey: process.env.DALL_E_API_KEY,
+    apiKey: process.env.OPENAI_API_KEY,
   });
 
   const response = await openai.images.generate({
