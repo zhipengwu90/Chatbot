@@ -16,6 +16,11 @@ const Image: NextPage = () => {
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const [isValid, setIsValid] = useState(false);
 
+  type ResultType = {
+    url?: string;
+    // other properties
+  };
+
   const checkPassword = () => {
     const passwordHandler = () => {
       if (passwordRef.current === null) return;
@@ -159,13 +164,13 @@ const Image: NextPage = () => {
             )}
             {loading && <p>Loading...</p>}
             <div className={styles.grid}>
-              {results.map((result) => {
+              {results.map((result: ResultType)  => {
                 return (
                   <div className={styles.card}>
                     <img
                       className={styles.imgPreview}
-                      src={result.url}
-                      onClick={() => download(result.url)}
+                    src={result?.url}
+                    onClick={() => download(result?.url ?? '')}
                     />
                   </div>
                 );
