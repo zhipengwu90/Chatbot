@@ -100,7 +100,7 @@ const Image: NextPage = () => {
 
       // Assuming setResult is a state updater from React useState
       setResult(resultData);
-  
+
       setLoading(false);
       console.log(resultData);
     }
@@ -177,7 +177,7 @@ const Image: NextPage = () => {
                 </button>
               )}
             </p>
-            <small>
+            {/* <small>
               Download as:{" "}
               <select
                 id="type"
@@ -191,7 +191,7 @@ const Image: NextPage = () => {
                 <option value="avif">Avif</option>
               </select>{" "}
               Click the image below and save.
-            </small>
+            </small> */}
             <br />
             {error ? (
               <div className={styles.error}>
@@ -208,15 +208,18 @@ const Image: NextPage = () => {
               </p>
             )}
             <div className={styles.grid}>
-              
-                  <div className={styles.card}>
-                    <img
-                      className={styles.imgPreview}
-                      src={result}
-                      onClick={() => download(result ?? "")}
-                    />
-                  </div>
-          
+              <div className={styles.card}>
+                <img
+                  className={styles.imgPreview}
+                  src={result}
+                  // onClick={() => download(result ?? "")}
+                  onClick={() => {
+                    if (result) {
+                      window.open(result, "_blank");
+                    }
+                  }}
+                />
+              </div>
             </div>
           </main>
         </div>
