@@ -216,3 +216,70 @@
   .passButton:hover {
     background-color: #136a16;
   }
+
+  .loadingText {
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .loadingAnimation {
+    display: inline-block;
+    position: relative;
+    width: 60px;
+    height: 60px;
+  }
+  
+  .loadingAnimation:before,
+  .loadingAnimation:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: transparent;
+    border: 5px solid #3498db;
+    border-top-color: transparent;
+  }
+  
+  .loadingAnimation:before {
+    animation: rotate 2s linear infinite;
+  }
+  
+  .loadingAnimation:after {
+    animation: rotate 2s linear infinite reverse;
+  }
+  
+  @keyframes rotate {
+    0% {
+      transform: translate(-50%, -50%) rotate(0deg);
+    }
+    100% {
+      transform: translate(-50%, -50%) rotate(360deg);
+    }
+  }
+  
+  .loadingAnimation span {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 12px;
+    color: #3498db;
+    animation: scale 2s linear infinite;
+  }
+  
+  @keyframes scale {
+    0%, 100% {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: translate(-50%, -50%) scale(1.2);
+      opacity: 0.5;
+    }
+  }

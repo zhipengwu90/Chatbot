@@ -4,6 +4,7 @@ import { useState, useRef } from "react";
 import styles from "../styles/Image.module.css";
 
 import axios from "axios";
+import { set } from "react-hook-form";
 
 const Image: NextPage = () => {
   const [token, setToken] = useState("");
@@ -55,6 +56,8 @@ const Image: NextPage = () => {
     if (prompt != "") {
       setError(false);
       setLoading(true);
+      setResults([]);
+
       axios
         .post(`/api/images?p=${prompt}&n=${number}&m=${model}`)
         .then((res) => {
@@ -86,8 +89,6 @@ const Image: NextPage = () => {
       });
   }
 
-
-
   return (
     <>
       {isValid ? (
@@ -96,7 +97,7 @@ const Image: NextPage = () => {
 
           <main className={styles.main}>
             <h1 className={styles.title}>
-              Create images with 
+              Create images with
               <span className={styles.titleColor}> DALL-E</span>
             </h1>
             <p className={styles.description}>
@@ -115,7 +116,7 @@ const Image: NextPage = () => {
                 onChange={(e) => setModel(e.target.value)}
               >
                 <option value="dall-e-2">DALL-E-2</option>
-                <option value="dall-e-3">DALL-E-3</option>
+                {/* <option value="dall-e-3">DALL-E-3</option> */}
               </select>
               <input
                 className={styles.input}
@@ -135,9 +136,13 @@ const Image: NextPage = () => {
                 max="10"
               />
 
-              <button className={styles.button} onClick={getImages}>
-                Get {number} Images
-              </button>
+              {loading ? (
+                <button className={styles.button}>Loading</button>
+              ) : (
+                <button className={styles.button} onClick={getImages}>
+                  Get {number} Images
+                </button>
+              )}
             </p>
             <small>
               Download as:{" "}
@@ -162,15 +167,21 @@ const Image: NextPage = () => {
             ) : (
               <></>
             )}
-            {loading && <p>Loading...</p>}
+            {loading && (
+              <p className={styles.loadingText}>
+                <span className={styles.loadingAnimation}>
+                  <span>Loading</span>
+                </span>
+              </p>
+            )}
             <div className={styles.grid}>
-              {results.map((result: ResultType)  => {
+              {results.map((result: ResultType) => {
                 return (
                   <div className={styles.card}>
                     <img
                       className={styles.imgPreview}
-                    src={result?.url}
-                    onClick={() => download(result?.url ?? '')}
+                      src={result?.url}
+                      onClick={() => download(result?.url ?? "")}
                     />
                   </div>
                 );
