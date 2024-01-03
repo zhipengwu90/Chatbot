@@ -12,7 +12,7 @@ const Home: NextPage = () => {
   const [loading, setLoading] = useState(false);
   const [prompt, setPrompt] = useState("");
   const [isSetting, setIsSetting] = useState(false);
-  const [gptModel, setGptModel] = useState("gpt-3.5-turbo");
+  const [gptModel, setGptModel] = useState("gpt-3.5-turbo-1106");
   const [sendPrevious, setSendPrevious] = useState(false);
 
   const sendPreviousHandler = () => {
@@ -213,6 +213,17 @@ const Home: NextPage = () => {
             </div>
             <div className={styles.radios}>
               <input
+                id="gpt-3.5-turbo-1106"
+                type="radio"
+                name="model"
+                value="gpt-3.5-turbo-1106"
+                checked={gptModel === "gpt-3.5-turbo-1106"}
+                onChange={(e) => setGptModel(e.target.value)}
+              />
+              <label htmlFor="gpt-3.5-turbo-1106">GPT-3.5-turbo-1106(Default)</label>
+            </div>
+            <div className={styles.radios}>
+              <input
                 id="gpt-4"
                 type="radio"
                 name="model"
@@ -221,38 +232,33 @@ const Home: NextPage = () => {
                 onChange={(e) => setGptModel(e.target.value)}
               />
               <label htmlFor="gpt-4">GPT-4</label>
-              <div className={styles.sendPrevious}>
-                <input
-                  type="checkbox"
-                  id="sendPrevious"
-                  name="sendPrevious"
-                  checked={sendPrevious}
-                  onChange={sendPreviousHandler}
-                />
-                <label htmlFor="sendPrevious"> Continuously Talk</label>
-              </div>
-              <div className={styles.warning}>
-                <span>Continuously Talk:</span> Send the most recent conversation with the current prompt. It will start from next prompt (not the current one)if you checked it.
-              </div>
             </div>
-            {/* <div className={styles.radios}>
+            <div className={styles.radios}>
               <input
+                id="gpt-4-0613"
                 type="radio"
                 name="model"
-                value="gpt-4-0314"
-                checked={gptModel === "gpt-4-0314"}
+                value="gpt-4-0613"
+                checked={gptModel === "gpt-4-0613"}
                 onChange={(e) => setGptModel(e.target.value)}
               />
-              <label htmlFor="gpt-4-32k">GPT-4-32k</label>
-            </div> */}
-            {/* <div className={styles.warning}>
-              <span>Warning:</span> Only use GPT-3.5-Turbo here, because GPT-4
-              is too expensive.
-              <br />
-              <span>16k:</span>This model offers four times the context length
-              of the base model .
-              <br />
-            </div> */}
+              <label htmlFor="gpt-4-0613">GPT-4-0613</label>
+            </div>
+            <div className={styles.sendPrevious}>
+              <input
+                type="checkbox"
+                id="sendPrevious"
+                name="sendPrevious"
+                checked={sendPrevious}
+                onChange={sendPreviousHandler}
+              />
+              <label htmlFor="sendPrevious"> Continuously Talk</label>
+            </div>
+            <div className={styles.warning}>
+              <span>Continuously Talk:</span> Send the most recent conversation
+              with the current prompt. It will start from next prompt (not the
+              current one)if you checked it.
+            </div>
 
             <table className={styles.tableText}>
               <thead>
