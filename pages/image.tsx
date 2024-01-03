@@ -12,6 +12,7 @@ const Image: NextPage = () => {
   const [number, setNumber] = useState(1);
   const [model, setModel] = useState("dall-e-2");
   const [results, setResults] = useState([]);
+  const [result, setResult] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const passwordRef = useRef<HTMLInputElement | null>(null);
@@ -52,24 +53,56 @@ const Image: NextPage = () => {
     );
   };
 
-  function getImages() {
+  async function getImages() {
     if (prompt != "") {
       setError(false);
       setLoading(true);
-      setResults([]);
+      setResult("");
 
-      axios
-        .post(`/api/images?p=${prompt}&n=${number}&m=${model}`)
-        .then((res) => {
-          setResults(res.data.result);
-          setLoading(false);
-        })
-        .catch((err) => {
-          setLoading(false);
-          setError(true);
-        });
-    } else {
-      setError(true);
+      const url = "/api/images";
+
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          prompt: prompt,
+          model: model,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const data = response.body;
+      if (!data) {
+        return;
+      }
+
+      console.log(data);
+
+      const reader = data.getReader();
+      const decoder = new TextDecoder();
+      let resultData = "";
+
+      while (true) {
+        const { value, done: doneReading } = await reader.read();
+
+        if (doneReading) {
+          break;
+        }
+
+        const chunkValue = decoder.decode(value);
+        resultData += chunkValue;
+      }
+
+      // Assuming setResult is a state updater from React useState
+      setResult(resultData);
+  
+      setLoading(false);
+      console.log(resultData);
     }
   }
 
@@ -116,7 +149,7 @@ const Image: NextPage = () => {
                 onChange={(e) => setModel(e.target.value)}
               >
                 <option value="dall-e-2">DALL-E-2</option>
-                {/* <option value="dall-e-3">DALL-E-3</option> */}
+                <option value="dall-e-3">DALL-E-3</option>
               </select>
               <input
                 className={styles.input}
@@ -126,7 +159,7 @@ const Image: NextPage = () => {
                 onChange={(e) => setPrompt(e.target.value)}
                 placeholder="Prompt"
               />
-              <input
+              {/* <input
                 className={styles.input}
                 id="number"
                 type="number"
@@ -134,13 +167,13 @@ const Image: NextPage = () => {
                 onChange={(e) => setNumber(Number(e.target.value))}
                 placeholder="Number of images"
                 max="10"
-              />
+              /> */}
 
               {loading ? (
                 <button className={styles.button}>Loading</button>
               ) : (
                 <button className={styles.button} onClick={getImages}>
-                  Get {number} Images
+                  Get Images
                 </button>
               )}
             </p>
@@ -175,17 +208,15 @@ const Image: NextPage = () => {
               </p>
             )}
             <div className={styles.grid}>
-              {results.map((result: ResultType) => {
-                return (
+              
                   <div className={styles.card}>
                     <img
                       className={styles.imgPreview}
-                      src={result?.url}
-                      onClick={() => download(result?.url ?? "")}
+                      src={result}
+                      onClick={() => download(result ?? "")}
                     />
                   </div>
-                );
-              })}
+          
             </div>
           </main>
         </div>

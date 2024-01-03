@@ -111,6 +111,7 @@ const Home: NextPage = () => {
 
     // This data is a ReadableStream
     const data = response.body;
+    console.log(data);
     if (!data) {
       return;
     }
