@@ -12,7 +12,7 @@ const Home: NextPage = () => {
   const [loading, setLoading] = useState(false);
   const [prompt, setPrompt] = useState("");
   const [isSetting, setIsSetting] = useState(false);
-  const [gptModel, setGptModel] = useState("gpt-3.5-turbo-1106");
+  const [gptModel, setGptModel] = useState("gpt-3.5-turbo");
   const [sendPrevious, setSendPrevious] = useState(false);
 
   const sendPreviousHandler = () => {
@@ -199,18 +199,19 @@ const Home: NextPage = () => {
                 checked={gptModel === "gpt-3.5-turbo"}
                 onChange={(e) => setGptModel(e.target.value)}
               />
-              <label htmlFor="gpt-3.5-turbo">GPT-3.5-Turbo</label>
+              <label htmlFor="gpt-3.5-turbo">GPT-3.5-Turbo(Default)</label>
             </div>
+
             <div className={styles.radios}>
               <input
-                id="GPT-3.5-turbo-16k"
+                id="gpt-4o"
                 type="radio"
                 name="model"
-                value="gpt-3.5-turbo-16k"
-                checked={gptModel === "gpt-3.5-turbo-16k"}
+                value="gpt-4o"
+                checked={gptModel === "gpt-4o"}
                 onChange={(e) => setGptModel(e.target.value)}
               />
-              <label htmlFor="GPT-3.5-turbo-16k">GPT-3.5-turbo-16k</label>
+              <label htmlFor="Ggpt-4o">GPT-4o</label>
             </div>
             <div className={styles.radios}>
               <input
@@ -221,30 +222,20 @@ const Home: NextPage = () => {
                 checked={gptModel === "gpt-3.5-turbo-1106"}
                 onChange={(e) => setGptModel(e.target.value)}
               />
-              <label htmlFor="gpt-3.5-turbo-1106">GPT-3.5-turbo-1106(Default)</label>
+              <label htmlFor="gpt-3.5-turbo-1106">GPT-3.5-Turbo-1106</label>
             </div>
             <div className={styles.radios}>
               <input
-                id="gpt-4"
+                id="gpt-4-turbo"
                 type="radio"
                 name="model"
-                value="gpt-4"
-                checked={gptModel === "gpt-4"}
+                value="gpt-4-turbo"
+                checked={gptModel === "gpt-4-turbo"}
                 onChange={(e) => setGptModel(e.target.value)}
               />
-              <label htmlFor="gpt-4">GPT-4</label>
+              <label htmlFor="gpt-4">GPT-4-Turbo</label>
             </div>
-            <div className={styles.radios}>
-              <input
-                id="gpt-4-0613"
-                type="radio"
-                name="model"
-                value="gpt-4-0613"
-                checked={gptModel === "gpt-4-0613"}
-                onChange={(e) => setGptModel(e.target.value)}
-              />
-              <label htmlFor="gpt-4-0613">GPT-4-0613</label>
-            </div>
+          
             <div className={styles.sendPrevious}>
               <input
                 type="checkbox"
@@ -272,18 +263,18 @@ const Home: NextPage = () => {
               <tbody>
                 <tr>
                   <td>GPT-3.5-Turbo</td>
-                  <td>$0.0015 / 1K tokens</td>
-                  <td>$0.002 / 1K tokens</td>
+                  <td>US$0.0005 / 1K tokens</td>
+                  <td>US$0.0015 / 1K tokens</td>
                 </tr>
                 <tr>
-                  <td>GPT-3.5-Turbo-16k</td>
-                  <td>$0.002 / 1K tokens</td>
-                  <td>$0.003 / 1K tokens</td>
+                  <td>GPT-4o</td>
+                  <td>US$0.005 / 1K tokens</td>
+                  <td>US$0.015 / 1K tokens</td>
                 </tr>
                 <tr>
-                  <td>GPT-4</td>
-                  <td>$0.03 / 1K tokens</td>
-                  <td>$0.06 / 1K tokens</td>
+                  <td>GPT-4-Turbo</td>
+                  <td>US$0.0100 / 1K tokens</td>
+                  <td>US$0.0300 / 1K tokens</td>
                 </tr>
                 {/* <tr>
                   <td>GPT-4-32k</td>

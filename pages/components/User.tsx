@@ -2,6 +2,8 @@ import styles from "../../styles/User.module.css";
 import Image from "next/image";
 import React from "react";
 import ReactMarkdown from 'react-markdown'
+import Markdown from 'react-markdown'
+
 interface UserProps {
   message: string;
 }
@@ -18,7 +20,8 @@ const User: React.FC<UserProps> = (props: UserProps) => {
             <br />
           </>
         ))} */}
-        <ReactMarkdown>{props.message}</ReactMarkdown>
+        {/* <ReactMarkdown>{props.message}</ReactMarkdown> */}
+        <Markdown>{props.message}</Markdown>
       </div>
     </div>
   );
