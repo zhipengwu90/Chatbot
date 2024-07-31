@@ -272,6 +272,11 @@ const Home: NextPage = () => {
                 </tr>
               </thead>
               <tbody>
+              <tr>
+                  <td>GPT-3.5-Turbo</td>
+                  <td>US$0.000150  1K tokens</td>
+                  <td>US$0.000600 / 1K tokens</td>
+                </tr>
                 <tr>
                   <td>GPT-3.5-Turbo</td>
                   <td>US$0.0005 / 1K tokens</td>
