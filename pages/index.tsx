@@ -12,7 +12,7 @@ const Home: NextPage = () => {
   const [loading, setLoading] = useState(false);
   const [prompt, setPrompt] = useState("");
   const [isSetting, setIsSetting] = useState(false);
-  const [gptModel, setGptModel] = useState("gpt-3.5-turbo");
+  const [gptModel, setGptModel] = useState("gpt-4o-mini");
   const [sendPrevious, setSendPrevious] = useState(false);
 
   const sendPreviousHandler = () => {
@@ -192,6 +192,17 @@ const Home: NextPage = () => {
             </div>
             <div className={styles.radios}>
               <input
+                id="gpt-4o-mini"
+                type="radio"
+                name="model"
+                value="gpt-4o-mini"
+                checked={gptModel === "gpt-4o-mini"}
+                onChange={(e) => setGptModel(e.target.value)}
+              />
+              <label htmlFor="gpt-4o-mini">GPT-4o-mini(Default)</label>
+            </div>
+            <div className={styles.radios}>
+              <input
                 id="gpt-3.5-turbo"
                 type="radio"
                 name="model"
@@ -199,7 +210,7 @@ const Home: NextPage = () => {
                 checked={gptModel === "gpt-3.5-turbo"}
                 onChange={(e) => setGptModel(e.target.value)}
               />
-              <label htmlFor="gpt-3.5-turbo">GPT-3.5-Turbo(Default)</label>
+              <label htmlFor="gpt-3.5-turbo">GPT-3.5-Turbo</label>
             </div>
 
             <div className={styles.radios}>
